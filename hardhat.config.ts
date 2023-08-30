@@ -1,15 +1,19 @@
-import {task} from "hardhat/config";
-import "@nomiclabs/hardhat-waffle";
-import '@nomiclabs/hardhat-ethers';
-import 'hardhat-deploy';
-import '@typechain/hardhat';
 import {HardhatUserConfig} from 'hardhat/types';
+
+import '@nomicfoundation/hardhat-chai-matchers';
+import '@nomicfoundation/hardhat-ethers';
 import "@nomiclabs/hardhat-etherscan";
+import '@typechain/hardhat';
+import 'solidity-coverage';
+
+import 'hardhat-deploy';
+import 'hardhat-deploy-ethers';
+import {task} from "hardhat/config";
 
 const secret = require("./secret.json");
 
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-    const accounts = await hre.ethers.getSigners();
+    const accounts = await hre.ethers.getSigners()
 
     for (const account of accounts) {
         console.log(account.address);
@@ -20,58 +24,29 @@ const config: HardhatUserConfig = {
     solidity: {
         compilers: [
             {
-                version: "0.8.4",
+                version: '0.8.17',
                 settings: {
                     optimizer: {
                         enabled: true,
-                        runs: 100000
-                    }
-                }
+                        runs: 2000,
+                    },
+                },
             },
-            {
-                version: "0.7.6",
-                settings: {
-                    optimizer: {
-                        enabled: true,
-                        runs: 100000
-                    }
-                }
-            }
         ],
     },
     namedAccounts: {
         owner: 0,
-        user1: 1,
-        user2: 2,
-        user3: 3,
-        user4: 4,
-        user5: 5
+        user1: 1
     },
     networks: {
-        bsc_test: {
-            url: secret.url_bsc_testnet,
-            accounts: [secret.key],
-            timeout: 120000
-        },
-        kovan: {
-            url: secret.url_kovan,
-            accounts: {
-                mnemonic: secret.mnemonic,
-                count: 5
-            },
-            timeout: 120000
-        },
-        hardhat: {
-            forking: {
-                url: secret.url_fork,
-                blockNumber: 14182860,
-                enabled: false
-            }
+        goerli: {
+            url: secret.url_goerli,
+            accounts: [secret.key]
         },
     },
     etherscan: {
-        apiKey: secret.apiKey
-    },
+        apiKey: secret.api_key
+    }
 }
 export default config;
 
