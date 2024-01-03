@@ -18,3 +18,13 @@ yarn compile
 ```
 yarn test
 ```
+
+## deploy goerli
+```
+yarn deploy
+```
+
+## run scripts on goerli
+```
+yarn run_testnet
+```

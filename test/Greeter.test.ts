@@ -1,12 +1,12 @@
 import {expect} from "chai";
-import {deploy2} from "../helpers/utils";
+import {setupFixture} from "../helpers/utils";
 
 describe("Greeter", async () => {
 
     let greeter: any;
 
     beforeEach(async () => {
-        greeter = await deploy2("Greeter", ["Hello, world!"]);
+        ({greeter} = await setupFixture());
     });
 
     it("Should return the new greeting once it's changed", async () => {
